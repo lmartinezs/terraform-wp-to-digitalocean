@@ -1,0 +1,19 @@
+#cloud-config
+package_update: true
+packages:
+  - docker.io
+  - docker-compose
+  - git
+
+write_files:
+  - path: /root/init.sh
+    content: |
+      apt install -y git
+      cd /root/
+      git clone https://github.com/lmartinezs/wp-docker.git
+      cd /root/wp-docker      
+      sh /root/wp-docker/install.sh
+
+runcmd:  
+  - chmod u+x /root/init.sh
+  - sh /root/init.sh
